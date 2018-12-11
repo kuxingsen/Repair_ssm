@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.repair.mapper.PhoneUserMapper">
+    <!--boolean ReplacePhone(String phone,String code);无则插入，有则更新-->
+    <insert id="replacePhone">
+        insert into phone_user values(#{phoneNum},#{code}) ON DUPLICATE KEY UPDATE code = values(code)
+    </insert>
+    <!--int selectPhoneUser(PhoneUser phoneUser);-->
+    <select id="selectPhoneUser" resultType="int">
+        select count(phone) from phone_user where phone=#{phoneNum} and code=#{code}
+    </select>
+    <!--void deleteCode(String phoneNum);-->
+    <update id="deleteCode" parameterType="String">
+        update phone_user set code=null where phone=#{phoneNum}
+    </update>
+</mapper>

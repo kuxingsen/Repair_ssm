@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.repair.mapper.RecordMapper">
+    <resultMap id="recordMap" type="cn.repair.pojo.Record">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="time" jdbcType="TIMESTAMP" property="time"/>
+        <result column="user_phone" jdbcType="VARCHAR" property="userPhone"/>
+    </resultMap>
+
+    <!--int insertRecord(Record record);-->
+    <insert id="insertRecord" >
+        insert into record values (null ,#{name}, #{address},#{content},#{time},#{userPhone})
+    </insert>
+    <!--List<Record> selectAllRecord(String phoneNum);-->
+    <select id="selectAllRecord" resultMap="recordMap">
+        select * from record where user_phone=#{phoneNum} order by id desc
+    </select>
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+
+    <!-- 包扫描器 -->
+    <context:component-scan base-package="cn.repair.mapper"/>
+    <!-- 加载配置文件 -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+          p:location="classpath:jdbc.properties"
+          p:fileEncoding="utf-8"/>
+    <!-- 数据库连接池 -->
+    <bean name="dataSource" class="org.apache.ibatis.datasource.pooled.PooledDataSource"
+          p:driver="${jdbc.driver}"
+          p:url="${jdbc.url}"
+          p:username="${jdbc.username}"
+          p:password="${jdbc.password}"
+          p:poolPingEnabled="${jdbc.poolPingEnabled}"
+          p:poolPingQuery="${jdbc.poolPingQuery}"
+          p:poolPingConnectionsNotUsedFor="${jdbc.poolPingConnectionsNotUsedFor}"
+    />
+    <!--开启事务-->
+    <bean id="transaction" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transaction"/>
+
+    <!-- 让spring管理sqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- 加载mybatis的全局配置文件 -->
+        <property name="configLocation" value="classpath:mybatis/config.xml" />
+        <property name="mapperLocations" value="classpath:mybatis/mapper/**.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.repair.mapper" /><!-- 具体dao层包的位置在哪，视你新建的dao层java包而定 -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+</beans>

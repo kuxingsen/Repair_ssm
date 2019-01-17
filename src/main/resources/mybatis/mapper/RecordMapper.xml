@@ -9,15 +9,41 @@
         <result column="address" jdbcType="VARCHAR" property="address"/>
         <result column="content" jdbcType="VARCHAR" property="content"/>
         <result column="time" jdbcType="TIMESTAMP" property="time"/>
+        <result column="sellerName" jdbcType="VARCHAR" property="sellerName"/>
+        <result column="sellerPhone" jdbcType="VARCHAR" property="sellerPhone"/>
+        <result column="partPrice" jdbcType="DOUBLE" property="partPrice"/>
+        <result column="serviceDuration" jdbcType="DOUBLE" property="serviceDuration"/>
+        <result column="servicePrice" jdbcType="DOUBLE" property="servicePrice"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
         <result column="user_phone" jdbcType="VARCHAR" property="userPhone"/>
     </resultMap>
 
     <!--int insertRecord(Record record);-->
     <insert id="insertRecord" >
-        insert into record values (null ,#{name}, #{address},#{content},#{time},#{userPhone})
+        insert into record values (null ,#{name}, #{address},#{content},#{time},null,null,null,null,null,0,#{userPhone})
     </insert>
+    <!--int takeRecord(Integer recordId, Seller seller);-->
+    <update id="takeRecord">
+        update record set sellerName=#{sellerName},sellerPhone=#{sellerPhone} where id=#{recordId}
+    </update>
+    <!--int setPairPrice(Integer valueOf, Seller seller);-->
+    <update id="setPartPrice">
+        update record set partPrice=#{partPrice} where id=#{recordId}
+    </update>
+    <update id="setService">
+        update record set serviceDuration=#{serviceDuration},servicePrice=#{servicePrice} where user_phone=#{phoneNum} and id=#{recordId}
+    </update>
+    <update id="pay">
+        update record set status=1 where id=#{recordId}
+    </update>
     <!--List<Record> selectAllRecord(String phoneNum);-->
     <select id="selectAllRecord" resultMap="recordMap">
         select * from record where user_phone=#{phoneNum} order by id desc
+    </select>
+    <select id="getPartPrice" resultType="java.lang.Double">
+        select partPrice from record where user_phone=#{phoneNum} and id=#{recordId}
+    </select>
+    <select id="getStatus" resultType="java.lang.Byte">
+        select status from record where id=#{recordId}
     </select>
 </mapper>

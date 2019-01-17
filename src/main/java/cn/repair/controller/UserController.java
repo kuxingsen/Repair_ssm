@@ -30,6 +30,7 @@ public class UserController{
             }
         }else {
             msg="不是正确的手机号格式";
+            System.out.println(phoneNum);
         }
         return new Result<>(false,msg);
     }

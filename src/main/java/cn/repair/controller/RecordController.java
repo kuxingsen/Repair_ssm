@@ -34,7 +34,7 @@ public class RecordController{
             if(r > 0){
                 List<Record> recordList = recordService.selectAllRecord(phone);
                 if(recordList != null){
-                    System.out.println(recordList);
+//                    System.out.println(recordList);
                     return new Result<>(true,recordList);
                 }else {
                     msg = "查无记录";
@@ -121,7 +121,7 @@ public class RecordController{
     public Result<Record> getRecord(HttpSession session){
         String msg="未登录";
         String phone = (String) session.getAttribute("userPhone");
-        phone="13556507839";
+//        phone="13556507839";
         if(PhoneUtil.isPhone(phone)){
             List<Record> recordList = recordService.selectAllRecord(phone);
             if(recordList != null){

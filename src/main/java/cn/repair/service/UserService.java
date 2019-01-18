@@ -36,4 +36,7 @@ public class UserService{
         return 0;
     }
 
+    public int loginAgain(String phoneNum) {
+        return phoneUserMapper.hasLogin(phoneNum);
+    }
 }

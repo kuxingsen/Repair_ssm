@@ -16,6 +16,11 @@ public class UserController{
     @Autowired
     private UserService userService;
 
+    /**
+     * 获取验证码
+     * @param phoneNum 手机号
+     * @return 失败（false）或成功（true）+验证码（data[0]）
+     */
     @RequestMapping("getCode")
     public Result<String> getCode(String phoneNum){
         String msg;
@@ -35,8 +40,13 @@ public class UserController{
         return new Result<>(false,msg);
     }
 
+    /**
+     * 用户登录
+     * @param phoneUser 需要phoneNum 手机号，code 验证码
+     * @return 失败（false）或成功（true）
+     */
     @RequestMapping("login")
-    public Result<String> loginByPhone(PhoneUser phoneUser, HttpSession session){
+    public Result loginByPhone(PhoneUser phoneUser, HttpSession session){
         String msg;
         //校验手机号和验证码格式
         if(PhoneUtil.isPhone(phoneUser.getPhoneNum()) && PhoneUtil.isCode(phoneUser.getCode())){
@@ -54,5 +64,24 @@ public class UserController{
         return new Result<>(false,msg);
     }
 
+    /**
+     * 免登陆直接进入（需要用户曾经登录过且数据库中没有验证码）
+     * @param phoneNum 手机号码
+     * @return 失败（false）或成功（true）
+     */
+    @RequestMapping("loginAgain")
+    public Result loginAgain(String phoneNum, HttpSession session){
+        String msg="不是正确的手机号或未登录";
+        //校验手机号和验证码格式
+        if(PhoneUtil.isPhone(phoneNum)){
+            //查看是否匹配
+            int r = userService.loginAgain(phoneNum);
+            if(r > 0){
+                session.setAttribute("userPhone",phoneNum);
+                return new Result<>(true);
+            }
+        }
+        return new Result<>(false,msg);
+    }
 
 }

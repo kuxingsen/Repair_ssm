@@ -13,4 +13,6 @@ public interface PhoneUserMapper{
     int selectPhoneUser(PhoneUser phoneUser);
 
     void deleteCode(String phoneNum);
+
+    int hasLogin(String phoneNum);
 }

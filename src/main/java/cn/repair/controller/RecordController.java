@@ -20,6 +20,11 @@ public class RecordController{
     @Autowired
     RecordService recordService;
 
+    /**
+     * 添加记录
+     * @param record 参数需包含name 申请人姓名、address 地址,content 维修内容
+     * @return 失败（false）返回msg，成功（true）则返回用户的维修记录
+     */
     @RequestMapping("record")
     public Result<Record> insertRecord(Record record, HttpSession session){
         String msg="未登录";
@@ -46,6 +51,11 @@ public class RecordController{
         return new Result<>(false,msg);
     }
 
+    /**
+     * 商家接单
+     * @param seller 需要recordId 记录id，sellerName 商家姓名，sellerPhone 商家电话
+     * @return 失败（false）或成功（true）
+     */
     @RequestMapping("takeRecord")
     public Result takeRecord(Seller seller){
         String msg="商家信息有误";
@@ -60,6 +70,11 @@ public class RecordController{
         return new Result(false,msg);
     }
 
+    /**
+     * 是否已有商家接单
+     * @param recordId  记录id
+     * @return 失败（false）或成功（true）
+     */
     @RequestMapping("isToken")
     public Result isToken(String  recordId){
         String msg="查无此记录";
@@ -74,6 +89,12 @@ public class RecordController{
         return new Result(false,msg);
     }
 
+    /**
+     * 商家设定零件价格
+     * @param recordId 记录id
+     * @param partPrice 零件价格
+     * @return 失败（false）或成功（true）
+     */
     @RequestMapping("setPartPrice")
     public Result setPartPrice(String  recordId,String partPrice){
         String msg="商家信息有误";
@@ -87,6 +108,12 @@ public class RecordController{
         }
         return new Result(false,msg);
     }
+
+    /**
+     * 是否已有零件总价
+     * @param recordId 记录id
+     * @return 失败（false）返回msg，成功（true）则返回零件总价（data[0]）
+     */
     @RequestMapping("getPartPrice")
     public Result<Double> getPartPrice(String recordId,HttpSession session) {
         String phone = (String) session.getAttribute("userPhone");
@@ -102,6 +129,12 @@ public class RecordController{
         }
         return new Result<>(false, msg);
     }
+
+    /**
+     * 设置服务时长和服务总价（每小时15元）
+     * @param service 需要recordId 记录id，serviceDuration 服务时长，servicePrice 服务总价
+     * @return 失败（false）或成功（true）
+     */
     @RequestMapping("setService")
     public Result<Double> setService(Service service, HttpSession session) {
         String phone = (String) session.getAttribute("userPhone");
@@ -117,6 +150,11 @@ public class RecordController{
         }
         return new Result<>(false, msg);
     }
+
+    /**
+     * 获取用户的所有记录
+     * @return 失败（false）返回msg，成功（true）则返回用户的维修记录
+     */
     @RequestMapping("getRecord")
     public Result<Record> getRecord(HttpSession session){
         String msg="未登录";
@@ -125,7 +163,7 @@ public class RecordController{
         if(PhoneUtil.isPhone(phone)){
             List<Record> recordList = recordService.selectAllRecord(phone);
             if(recordList != null){
-                System.out.println(recordList);
+//                System.out.println(recordList);
                 return new Result<>(true,recordList);
             }else {
                 msg = "查无记录";

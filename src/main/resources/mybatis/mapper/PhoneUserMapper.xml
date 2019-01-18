@@ -11,6 +11,9 @@
     <select id="selectPhoneUser" resultType="int">
         select count(phone) from phone_user where phone=#{phoneNum} and code=#{code}
     </select>
+    <select id="hasLogin" resultType="java.lang.Integer">
+        select count(phone) from phone_user where phone=#{phoneNum} and code is null
+    </select>
     <!--void deleteCode(String phoneNum);-->
     <update id="deleteCode" parameterType="String">
         update phone_user set code=null where phone=#{phoneNum}

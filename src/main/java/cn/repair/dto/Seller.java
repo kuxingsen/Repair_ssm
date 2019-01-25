@@ -8,6 +8,10 @@ public class Seller{
     public Seller() {
     }
 
+    public Seller(String recordId) {
+        this.recordId = recordId;
+    }
+
     @Override
     public String toString() {
         return "Seller{" +

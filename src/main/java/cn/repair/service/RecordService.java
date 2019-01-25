@@ -7,6 +7,8 @@ import cn.repair.utils.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,12 +18,16 @@ public class RecordService{
     @Autowired
     RecordMapper recordMapper;
 
-    public int insertRecord(Record record, String phone) {
+    public String insertRecord(Record record, String phone) {
         //为记录添加手机号、时间
         record.setUserPhone(phone);
         record.setTime(DateTimeUtil.now());
         //将记录添加到数据库
-        return recordMapper.insertRecord(record);
+        int i = recordMapper.insertRecord(record);
+        if(i > 0){
+            return record.getId();
+        }
+        return null;
     }
 
     public List<Record> selectAllRecord(String phone) {
@@ -43,11 +49,14 @@ public class RecordService{
     }
 
     public double getPartPrice(String recordId, String phone) {
-        return recordMapper.getPartPrice(Integer.valueOf(recordId),phone);
+        BigDecimal r= new BigDecimal(String.valueOf(recordMapper.getPartPrice(Integer.valueOf(recordId),phone)));
+//        System.out.println(r.doubleValue());
+        double f1 = r.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+//        System.out.println(f1);
+        return f1;
     }
 
     public int setService(cn.repair.dto.Service service, String phone) {
-
         int i = recordMapper.setService(Integer.valueOf(service.getRecordId()), service.getServiceDuration(),service.getServicePrice(), phone);
         if(i > 0){
             return recordMapper.pay(Integer.valueOf(service.getRecordId()));
@@ -63,11 +72,15 @@ public class RecordService{
         String s;
         switch(status){
             case 0:
-                s="未维修";break;
+                s="用户申请维修";break;
             case 1:
-                s="维修中";break;
+                s="商家接单，等待用户确认";break;
             case 2:
-                s="已支付";break;
+                s="用户确认订单，商家维修中";break;
+            case 3:
+                s="维修价格已确定，等待用户支付";break;
+            case 4:
+                s="用户已支付";break;
             default:
                 s=null;
         }
@@ -76,5 +89,21 @@ public class RecordService{
 
     public int isToken(String recordId) {
         return recordMapper.getStatus(recordId);
+    }
+
+    public Seller getSellerByRecordId(String recordId) {
+        return recordMapper.getSellerByRecordId(recordId);
+    }
+
+    public int rejectToken(String recordId) {
+        return recordMapper.rejectToken(recordId);
+    }
+
+    public int agreeToken(String recordId) {
+        return recordMapper.agreeToken(recordId);
+    }
+
+    public Record getARecord(String recordId) {
+        return recordMapper.getARecord(recordId);
     }
 }

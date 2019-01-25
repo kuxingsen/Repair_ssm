@@ -25,4 +25,12 @@ public interface RecordMapper{
     int pay(@Param("recordId")Integer recordId);
 
     byte getStatus(String recordId);
+
+    Seller getSellerByRecordId(String recordId);
+
+    int rejectToken(String recordId);
+
+    int agreeToken(String recordId);
+
+    Record getARecord(String recordId);
 }

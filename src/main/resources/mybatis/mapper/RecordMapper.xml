@@ -17,24 +17,29 @@
         <result column="status" jdbcType="TINYINT" property="status"/>
         <result column="user_phone" jdbcType="VARCHAR" property="userPhone"/>
     </resultMap>
+    <resultMap id="sellerMap" type="cn.repair.dto.Seller">
+        <id column="id" jdbcType="INTEGER" property="recordId"/>
+        <result column="sellerName" jdbcType="VARCHAR" property="sellerName"/>
+        <result column="sellerPhone" jdbcType="VARCHAR" property="sellerPhone"/>
+    </resultMap>
 
     <!--int insertRecord(Record record);-->
-    <insert id="insertRecord" >
+    <insert id="insertRecord" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
         insert into record values (null ,#{name}, #{address},#{content},#{time},null,null,null,null,null,0,#{userPhone})
     </insert>
     <!--int takeRecord(Integer recordId, Seller seller);-->
     <update id="takeRecord">
-        update record set sellerName=#{sellerName},sellerPhone=#{sellerPhone} where id=#{recordId}
+        update record set sellerName=#{sellerName},sellerPhone=#{sellerPhone},status=1 where id=#{recordId}
     </update>
     <!--int setPairPrice(Integer valueOf, Seller seller);-->
     <update id="setPartPrice">
         update record set partPrice=#{partPrice} where id=#{recordId}
     </update>
     <update id="setService">
-        update record set serviceDuration=#{serviceDuration},servicePrice=#{servicePrice} where user_phone=#{phoneNum} and id=#{recordId}
+        update record set serviceDuration=#{serviceDuration},servicePrice=#{servicePrice},status=3 where user_phone=#{phoneNum} and id=#{recordId}
     </update>
     <update id="pay">
-        update record set status=1 where id=#{recordId}
+        update record set status=4 where id=#{recordId}
     </update>
     <!--List<Record> selectAllRecord(String phoneNum);-->
     <select id="selectAllRecord" resultMap="recordMap">
@@ -46,4 +51,16 @@
     <select id="getStatus" resultType="java.lang.Byte">
         select status from record where id=#{recordId}
     </select>
+    <select id="getSellerByRecordId" resultType="cn.repair.dto.Seller">
+        select id,sellerName,sellerPhone from record where id=#{recordId}
+    </select>
+    <select id="getARecord" resultMap="recordMap">
+        select * from record where id=#{recordId}
+    </select>
+    <delete id="rejectToken">
+        delete from record where id=#{recordId} and status=1
+    </delete>
+    <update id="agreeToken">
+        update record set status=2 where id=#{recordId} and status=1
+    </update>
 </mapper>

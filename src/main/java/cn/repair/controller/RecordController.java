@@ -142,7 +142,7 @@ public class RecordController{
             if(r > 0f) {
                 return new Result<>(true,new ArrayList<Double>(){{this.add(r);}});
             } else {
-                msg = "查无此订单";
+                msg = "商家尚未确定零件价格";
             }
         }
         return new Result<>(false, msg);

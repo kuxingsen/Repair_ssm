@@ -18,7 +18,7 @@ public interface RecordMapper{
 
     int setPartPrice(@Param("recordId")Integer recordId, @Param("partPrice")String partPrice);
 
-    double getPartPrice(@Param("recordId")Integer recordId, @Param("phoneNum")String phone);
+    String getPartPrice(@Param("recordId")Integer recordId, @Param("phoneNum")String phone);
 
     int setService(@Param("recordId")Integer recordId, @Param("serviceDuration") String serviceDuration,@Param("servicePrice") String servicePrice, @Param("phoneNum")String phone);
 

@@ -49,11 +49,15 @@ public class RecordService{
     }
 
     public double getPartPrice(String recordId, String phone) {
-        BigDecimal r= new BigDecimal(String.valueOf(recordMapper.getPartPrice(Integer.valueOf(recordId),phone)));
+        String partPrice = recordMapper.getPartPrice(Integer.valueOf(recordId),phone);
+        if(partPrice != null){
+            BigDecimal r= new BigDecimal(partPrice);
 //        System.out.println(r.doubleValue());
-        double f1 = r.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            double f1 = r.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 //        System.out.println(f1);
-        return f1;
+            return f1;
+        }
+        return -1f;
     }
 
     public int setService(cn.repair.dto.Service service, String phone) {

@@ -17,7 +17,7 @@ CREATE TABLE `record` (
   `sellerName` varchar(20) DEFAULT NULL COMMENT '商家姓名',
   `sellerPhone` varchar(12) DEFAULT NULL COMMENT '商家电话',
   `partPrice` double DEFAULT NULL COMMENT '零件价格',
-  `serviceDuration` double DEFAULT NULL COMMENT '服务时长',
+  `serviceDuration` varchar(12) DEFAULT NULL COMMENT '服务时长',
   `servicePrice` double DEFAULT NULL COMMENT '服务总价',
   `status` TINYINT DEFAULT 0 COMMENT '记录状态，0-未维修，1-商家接单，2-维修中（用户同意商家接单），3-待支付（商家以给出零件价和服务价），4-已支付',
   `user_phone` varchar(12) NOT NULL,

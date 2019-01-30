@@ -12,7 +12,7 @@
         <result column="sellerName" jdbcType="VARCHAR" property="sellerName"/>
         <result column="sellerPhone" jdbcType="VARCHAR" property="sellerPhone"/>
         <result column="partPrice" jdbcType="DOUBLE" property="partPrice"/>
-        <result column="serviceDuration" jdbcType="DOUBLE" property="serviceDuration"/>
+        <result column="serviceDuration" jdbcType="VARCHAR" property="serviceDuration"/>
         <result column="servicePrice" jdbcType="DOUBLE" property="servicePrice"/>
         <result column="status" jdbcType="TINYINT" property="status"/>
         <result column="user_phone" jdbcType="VARCHAR" property="userPhone"/>
@@ -45,7 +45,7 @@
     <select id="selectAllRecord" resultMap="recordMap">
         select * from record where user_phone=#{phoneNum} order by id desc
     </select>
-    <select id="getPartPrice" resultType="java.lang.Double">
+    <select id="getPartPrice" resultType="java.lang.String">
         select partPrice from record where user_phone=#{phoneNum} and id=#{recordId}
     </select>
     <select id="getStatus" resultType="java.lang.Byte">

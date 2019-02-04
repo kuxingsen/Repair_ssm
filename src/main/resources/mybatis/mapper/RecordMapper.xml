@@ -33,10 +33,10 @@
     </update>
     <!--int setPairPrice(Integer valueOf, Seller seller);-->
     <update id="setPartPrice">
-        update record set partPrice=#{partPrice} where id=#{recordId}
+        update record set partPrice=#{partPrice},status=3 where id=#{recordId}
     </update>
     <update id="setService">
-        update record set serviceDuration=#{serviceDuration},servicePrice=#{servicePrice},status=3 where user_phone=#{phoneNum} and id=#{recordId}
+        update record set serviceDuration=#{serviceDuration},servicePrice=#{servicePrice} where user_phone=#{phoneNum} and id=#{recordId}
     </update>
     <update id="pay">
         update record set status=4 where id=#{recordId}

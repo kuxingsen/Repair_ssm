@@ -42,7 +42,7 @@
         update record set status=4 where id=#{recordId}
     </update>
     <!--List<Record> selectAllRecord(String phoneNum);-->
-    <select id="selectAllRecord" resultMap="recordMap">
+    <select id="selectRecord" resultMap="recordMap">
         select * from record where user_phone=#{phoneNum} order by id desc
     </select>
     <select id="getPartPrice" resultType="java.lang.String">
@@ -56,6 +56,9 @@
     </select>
     <select id="getARecord" resultMap="recordMap">
         select * from record where id=#{recordId}
+    </select>
+    <select id="selectAllRecord" resultMap="recordMap">
+        select * from record order by id desc
     </select>
     <delete id="rejectToken">
         delete from record where id=#{recordId} and status=1

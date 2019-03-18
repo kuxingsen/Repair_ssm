@@ -30,9 +30,9 @@ public class RecordService{
         return null;
     }
 
-    public List<Record> selectAllRecord(String phone) {
+    public List<Record> selectRecord(String phone) {
         //取出所有维修记录
-        List<Record> recordList = recordMapper.selectAllRecord(phone);
+        List<Record> recordList = recordMapper.selectRecord(phone);
         for(Record record:recordList){
             record.setStatus(getStatus(Byte.valueOf(record.getStatus())));
             record.setTime(record.getTime().replace(".0",""));
@@ -109,5 +109,11 @@ public class RecordService{
 
     public Record getARecord(String recordId) {
         return recordMapper.getARecord(recordId);
+    }
+
+    public List<Record> selectAllRecord() {
+        //取出所有维修记录
+        List<Record> recordList = recordMapper.selectAllRecord();
+        return recordList;
     }
 }

@@ -179,7 +179,22 @@ public class RecordController{
         String phone = (String) session.getAttribute("userPhone");
 //        phone="13556507839";
         if(PhoneUtil.isPhone(phone)){
-            List<Record> recordList = recordService.selectAllRecord(phone);
+            List<Record> recordList = recordService.selectRecord(phone);
+            if(recordList != null){
+                return new Result<>(true,recordList);
+            }else {
+                msg = "查无记录";
+            }
+        }
+        return new Result<>(false,msg);
+    }
+    @RequestMapping("getAllRecord")
+    public Result<Record> getAllRecord(HttpSession session){
+        String msg="未登录";
+        String phone = (String) session.getAttribute("userPhone");
+        phone="13556507839";
+        if(PhoneUtil.isAdmin(phone)){
+            List<Record> recordList = recordService.selectAllRecord();
             if(recordList != null){
                 return new Result<>(true,recordList);
             }else {

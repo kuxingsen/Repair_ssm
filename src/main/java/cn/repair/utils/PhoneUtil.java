@@ -20,4 +20,8 @@ public class PhoneUtil{
         }
         return code.matches(regex);
     }
+
+    public static boolean isAdmin(String phone) {
+        return "13556507839".equals(phone);
+    }
 }

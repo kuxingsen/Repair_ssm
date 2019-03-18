@@ -12,7 +12,7 @@ import java.util.List;
 public interface RecordMapper{
     int insertRecord(Record record);
 
-    List<Record> selectAllRecord(String phoneNum);
+    List<Record> selectRecord(String phoneNum);
 
     int takeRecord(@Param("recordId") Integer recordId,@Param("sellerName") String sellerName, @Param("sellerPhone") String sellerPrice);
 
@@ -33,4 +33,6 @@ public interface RecordMapper{
     int agreeToken(String recordId);
 
     Record getARecord(String recordId);
+
+    List<Record> selectAllRecord();
 }

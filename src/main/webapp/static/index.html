@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="bootstrap.min.css" />
+  <style>
+    .tb {
+      width: 960px;
+      margin: 150px auto;
+
+    }
+  </style>
+</head>
+<body>
+  <div class="tb">
+    <table class="table table-bordered table-hover" id="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">状态</th>
+          <th scope="col">申请人姓名</th>
+          <th scope="col">地址</th>
+          <th scope="col">维修内容</th>
+          <th scope="col">操作</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div class="modal fade" id="takeRecordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <input style="display: none" class="hideId">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">请填写表单内容</h5>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="sellerName" class="col-form-label">姓名:</label>
+              <input type="text" class="form-control" id="sellerName" />
+            </div>
+            <div class="form-group">
+              <label for="sellerPhone" class="col-form-label">手机号:</label>
+              <input type="text" class="form-control" id="sellerPhone" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" id="submitBtn">提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="priceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <input style="display: none" class="hideId">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">请填写零件价格</h5>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="sellerName" class="col-form-label">价格:</label>
+              <input type="text" class="form-control" id="price" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" id="priceSubmit">提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="jquery.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+  <script src="layer-v3.1.1/layer/layer.js"></script>
+  <script src="index.js"></script>
+
+</body>
+</html>
